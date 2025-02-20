@@ -1,0 +1,114 @@
+# Copyright 2024 The Pigweed Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+# Standard Pigweed flags
+# ======================
+# All Pigweed projects are expected to set these flags. They mostly pre-adopt
+# future Bazel settings, and most are critical to working around known issues.
+#
+# The source of truth for these flags is @pigweed//pw_build:pigweed.bazelrc in
+# the main Pigweed repo.
+
+# Don't automatically create __init__.py files.
+#
+# This prevents spurious package name collisions at import time, and should be
+# the default (https://github.com/bazelbuild/bazel/issues/7386). It's
+# particularly helpful for Pigweed, because we have many potential package name
+# collisions due to a profusion of stuttering paths like
+# pw_transfer/py/pw_transfer.
+common --incompatible_default_to_explicit_init_py
+
+# Do not attempt to configure an autodetected (local) toolchain. We vendor all
+# our toolchains, and CI VMs may not have any local toolchain to detect.
+common --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
+# Don't propagate flags or defines to the exec config. This will become the
+# default one day (https://github.com/bazelbuild/bazel/issues/22457) and will
+# improve cache hit rates between builds targeting different platforms. This is
+# especially impactful for large host tools like protoc, which will have its
+# cache invalidated when your host C++ config changes, causing many rebuilds
+# of protoc (https://pwbug.dev/315871648).
+common --experimental_exclude_defines_from_exec_config
+common --experimental_exclude_starlark_flags_from_exec_config
+
+# Enforces consistent action environment variables. This is important to
+# address Protobuf's rebuild sensitivity on changes to the environment
+# variables. It also improves cache hit rates. Should be true by default one
+# day (https://github.com/bazelbuild/bazel/issues/7026).
+build --incompatible_strict_action_env
+
+# Expose exec toolchains for Python. We use these toolchains in some rule
+# implementations (git grep for
+# "@rules_python//python:exec_tools_toolchain_type").
+build --@rules_python//python/config_settings:exec_tools_toolchain=enabled
+
+# TODO: https://github.com/bazelbuild/rules_python/issues/2515 - This flag was
+# enabled with Bazel 8.0.0, but it breaks py_proto_library imports when using
+# the latest release of rules_python (1.0.0). Flipping this flag is a temporary
+# workaround.
+common --legacy_external_runfiles=True
+
+# C++ toolchain configuration
+# ===========================
+
+# Ignore all warnings in third-party code.
+common --per_file_copt=external/.*@-w
+common --host_per_file_copt=external/.*@-w
+
+# Keep debugging symbols, but don't send them when flashing.
+build --strip=never
+
+
+# Sanitizer configs
+# =================
+common:asan --@pigweed//pw_toolchain/host_clang:asan
+common:tsan --@pigweed//pw_toolchain/host_clang:tsan
+common:ubsan --@pigweed//pw_toolchain/host_clang:ubsan
+
+# clang-tidy
+# ==========
+# clang-tidy configuration
+build:clang-tidy --aspects @bazel_clang_tidy//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
+build:clang-tidy --output_groups=report
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_config=//:clang_tidy_config
+# Use the clang-tidy executable from Pigweed's toolchain, and include
+# our sysroot headers.
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_executable=@pigweed//pw_toolchain/host_clang:copy_clang_tidy
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_additional_deps=@pigweed//pw_toolchain/host_clang:sysroot_root
+# Skip any targets with tags = ["noclangtidy"]. This allows a gradual
+# rollout.
+build:clang-tidy --build_tag_filters=-noclangtidy
+# We need to disable this warning to avoid spurious "#pragma once in main file"
+# warnings for header-only libraries. For another approach, see
+# https://github.com/mongodb-forks/bazel_clang_tidy/pull/2
+build:clang-tidy --copt=-Wno-pragma-once-outside-header
+
+
+# UX settings
+# ===========
+# Error output settings.
+common --verbose_failures
+test --test_output=errors
+
+# Suppress the DEBUG: log messages from bazel. We get spammy DEBUG:
+# messages from rules_python.
+#
+# TODO: https://github.com/bazelbuild/rules_python/issues/1818 - Re-enable DEBUG
+# messages once rules_python stops spamming us.
+common --ui_event_filters=-debug
+
+# Platform configuration
+# ======================
+common --custom_malloc=//targets:malloc
+build --@pigweed//pw_build:default_module_config=//system:module_config
