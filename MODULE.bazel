@@ -1,3 +1,5 @@
+# Cubo Project
+
 module(
     name = "cubo",
 )
@@ -5,11 +7,11 @@ module(
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "freertos", version = "10.5.1.bcr.2")
 bazel_dep(name = "nanopb", version = "0.4.9.1", repo_name = "com_github_nanopb_nanopb")
-bazel_dep(name = "pico-sdk", version = "2.0.0")
 bazel_dep(name = "pigweed")
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "rules_platform", version = "0.1.0")
 bazel_dep(name = "rules_python", version = "0.40.0")
+bazel_dep(name = "rules_cc", version = "0.0.17")
 
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 
@@ -47,9 +49,7 @@ git_repository(
 # ======================
 # Register Pigweed's C++ toolchains.
 register_toolchains(
-    "@pigweed//pw_toolchain:cc_toolchain_cortex-m0",
-    "@pigweed//pw_toolchain:cc_toolchain_cortex-m33",
-    "@pigweed//pw_toolchain:cc_toolchain_cortex-m4",
+    "//toolchains:cc_toolchain_cortex-m4",
     "@pigweed//pw_toolchain/host_clang:host_cc_toolchain_linux",
     dev_dependency = True,
 )

@@ -66,6 +66,10 @@ common --legacy_external_runfiles=True
 common --per_file_copt=external/.*@-w
 common --host_per_file_copt=external/.*@-w
 
+# # Picotool needs to build with exceptions and RTTI enabled.
+# common --per_file_copt=external.*picotool.*@-fexceptions,-frtti
+# common --host_per_file_copt=external.*picotool.*@-fexceptions,-frtti
+
 # Keep debugging symbols, but don't send them when flashing.
 build --strip=never
 
@@ -110,5 +114,13 @@ common --ui_event_filters=-debug
 
 # Platform configuration
 # ======================
-common --custom_malloc=//targets:malloc
-build --@pigweed//pw_build:default_module_config=//system:module_config
+# common --custom_malloc=//targets:malloc
+# build --@pigweed//pw_build:default_module_config=//system:module_config
+
+# RP2040 platform configuration
+# build:rp2040 --platforms=//targets/rp2:rp2040
+# test:rp2040 --run_under=@pigweed//targets/rp2040/py:unit_test_client
+
+# RP2350 is the same as rp2040 but with a different --platforms setting.
+# build:rp2350 --config=rp2040
+# build:rp2350 --platforms=//targets/rp2:rp2350
