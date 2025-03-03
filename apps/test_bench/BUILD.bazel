@@ -1,9 +1,26 @@
-# load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@pigweed//pw_build:pw_cc_binary.bzl", "pw_cc_binary_with_map")
+load("//targets/atsame54n20a:binary.bzl", "atsame54n20a_binary")
 
 package(default_visibility = ["//visibility:public"])
 
-cc_binary(
+pw_cc_binary_with_map(
     name = "test_bench",
     srcs = ["app.cc"],
-    deps = [ "@pigweed//pw_status" ],
+    deps = [
+        "@pigweed//pw_status",
+        # "@cmsis//:core",
+    ] + select({
+        "@platforms//cpu:armv7e-m": [
+            "//targets/atsame54n20a:linker_script",
+            "//targets/atsame54n20a:pre_init",
+            "//targets/atsame54n20a/bsp:init",
+            "//targets/atsame54n20a/bsp:peripheral",
+            # Resolves dependencies to lib nano (_write, _read, etc) with stubs.
+            "@pigweed//pw_toolchain/arm_gcc:arm_none_eabi_gcc_support",
+        ],})
+)
+
+atsame54n20a_binary(
+    name = "test_bench.elf",
+    binary = ":test_bench",
 )

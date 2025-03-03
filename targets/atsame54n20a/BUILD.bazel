@@ -1,0 +1,40 @@
+load(
+    "@pigweed//pw_build:pigweed.bzl",
+    "pw_linker_script",
+)
+
+load("@pigweed//pw_build:merge_flags.bzl", "flags_from_dict")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+pw_linker_script(
+    name = "linker_script",
+    linker_script = "@atsame54_device_pack//:gcc/gcc/same54n20a_flash.ld",
+)
+
+cc_library(
+    name = "pre_init",
+    deps = ["@atsame54_device_pack//:same54n20a_deps"],
+    alwayslink = 1,
+)
+
+platform(
+    name = "atsame54n20a",
+    constraint_values = [
+        # "@platforms//os:linux",
+        # For toolchain selection.
+        "@platforms//cpu:armv7e-m",
+        "@pigweed//pw_build/constraints/arm:cortex-m4",
+        "@pigweed//pw_cpu_exception:enabled",
+        "@pigweed//pw_interrupt_cortex_m:backend",
+        "@platforms//os:none",
+    ],
+    flags = flags_from_dict({
+        # Backends goe here...
+        "@pigweed//pw_toolchain:cortex-m_toolchain_kind": "gcc",
+        "@pigweed//pw_assert:backend": "@pigweed//pw_assert_basic",
+        "@pigweed//pw_assert:check_backend": "@pigweed//pw_assert_basic",
+        # Linker goes here?
+    }),
+)

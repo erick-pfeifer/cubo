@@ -15,6 +15,10 @@ bazel_dep(name = "rules_cc", version = "0.0.17")
 
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "local_repository")
+cipd_repository = use_repo_rule("@pigweed//pw_env_setup/bazel/cipd_setup:cipd_rules.bzl", "cipd_repository")
+
 # Module overrides
 # ================
 # TODO: https://pwbug.dev/349880767 - Point this back to the upstream repo once
@@ -45,11 +49,44 @@ git_repository(
     remote = "https://github.com/erenon/bazel_clang_tidy.git",
 )
 
+local_repository(
+    name = "atsame54_device_pack",
+    path = "targets/atsame54n20a/Microchip.SAME54_DFP.3.8.234",
+)
+
+http_archive(
+    name = "cmsis",
+    build_file_content = """
+cc_library(
+  name = "core",
+  includes = [ "CMSIS/Core/Include", ],
+  hdrs = [
+    "CMSIS/Core/Include/cmsis_version.h",
+    "CMSIS/Core/Include/cmsis_compiler.h",
+    "CMSIS/Core/Include/cmsis_gcc.h",
+    "CMSIS/Core/Include/mpu_armv7.h",
+    "CMSIS/Core/Include/core_cm4.h", ],
+  visibility = ["//visibility:public"]
+)
+    """,
+    strip_prefix = "CMSIS_5-develop",
+    url = "https://github.com/ARM-software/CMSIS_5/archive/refs/heads/develop.zip",
+)
+
+# Fetch gcc-arm-none-eabi toolchain.
+cipd_repository(
+    name = "gcc_arm_none_eabi_toolchain",
+    build_file = "@pigweed//pw_toolchain/build_external:arm_none_eabi_gcc.BUILD",
+    path = "fuchsia/third_party/armgcc/${os}-${arch}",
+    tag = "version:2@12.2.MPACBTI-Rel1.1",
+)
+
 # Toolchain registration
 # ======================
 # Register Pigweed's C++ toolchains.
 register_toolchains(
-    "//toolchains:cc_toolchain_cortex-m4",
+    # "//toolchains:cc_toolchain_cortex-m4",
+    "//toolchains:gcc_device",
     "@pigweed//pw_toolchain/host_clang:host_cc_toolchain_linux",
     dev_dependency = True,
 )

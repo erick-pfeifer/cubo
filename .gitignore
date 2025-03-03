@@ -1,0 +1,66 @@
+# Build
+out/
+compile_commands.json
+user.bazelrc
+/bazel-*
+MODULE.bazel.lock
+
+# Editors
+.pw_ide/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/pw_user_*.json
+.vscode/*.bak.json
+.idea/
+.project
+.cproject
+.clangd
+.clangd/
+*.swp
+*.swo
+.#*
+
+# Python
+python*-env/
+.python*-env/
+venv/
+*.pyc
+*.egg/
+*.eggs/
+*.egg-info/
+.cache/
+.mypy_cache/
+__pycache__/
+
+# Mac
+.DS_Store
+
+# GDB
+.gdb_history
+
+# Git
+*.orig
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+# Other
+logfile.txt
+pw_console-*logs.txt
+.pw_console.user.yaml
+factory-logs-*.txt
+
+
+# third_party
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/build/
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/dist/
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/debug/
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/.generated_files/
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/nbproject/Makefile*
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/mcc-manifest-autosave.yml
+/third_party/mplabx/atsame54n20a_bsp/xplained_pro_bsp.X/mcc-manifest-generated-success.yml
