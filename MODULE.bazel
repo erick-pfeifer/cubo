@@ -95,5 +95,6 @@ register_toolchains(
     # "//toolchains:cc_toolchain_cortex-m4",
     "//toolchains:gcc_device",
     "@pigweed//pw_toolchain/host_clang:host_cc_toolchain_linux",
+    "@pigweed//pw_toolchain/host_clang:host_cc_toolchain_macos",
     dev_dependency = True,
 )

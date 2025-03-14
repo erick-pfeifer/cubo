@@ -13,7 +13,7 @@ int main() {
   SYS_Initialize(nullptr);
   bench::Foo().IgnoreError();
   while(true) {
-    DBG_Toggle();
+    LED_Clear();
   }
   return 0;
 }
