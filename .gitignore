@@ -19,6 +19,7 @@ MODULE.bazel.lock
 *.swp
 *.swo
 .#*
+.buildifier.json
 
 # Python
 python*-env/

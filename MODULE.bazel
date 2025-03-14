@@ -73,6 +73,13 @@ cc_library(
     url = "https://github.com/ARM-software/CMSIS_5/archive/refs/heads/develop.zip",
 )
 
+# Get the OpenOCD binary (we'll use it for flashing).
+cipd_repository(
+    name = "openocd",
+    path = "infra/3pp/tools/openocd/${os}-${arch}",
+    tag = "version:2@0.11.0-3",
+)
+
 # Fetch gcc-arm-none-eabi toolchain.
 cipd_repository(
     name = "gcc_arm_none_eabi_toolchain",

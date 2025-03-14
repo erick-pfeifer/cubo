@@ -5,7 +5,7 @@
 
 namespace bench {
   pw::Status Foo() {
-    return pw::Status::NotFound();
+    return pw::OkStatus();
   }
 }
 

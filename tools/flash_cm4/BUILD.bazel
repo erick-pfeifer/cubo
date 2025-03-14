@@ -1,0 +1,31 @@
+load("//tools/flash_cm4:flash.bzl", "flash_cm4")
+load("@pigweed//pw_build:python.bzl", "pw_py_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+
+
+# py_binary(
+#     name = "flash",
+#     srcs = ["flash.py"],
+#     data = [
+#         "//apps/test_bench:test_bench.elf",
+#         "@openocd//:all",
+#     ],
+#     deps = [
+#         "@pigweed//pw_system/py:pw_system_lib",
+#         "@rules_python//python/runfiles",
+#     ],
+# )
+
+pw_py_binary(
+    name = "flash",
+    srcs = [
+        "py/flash.py",
+    ],
+    main = "py/flash.py",
+    deps = [
+        "@pigweed//pw_system/py:pw_system_lib",
+        "@rules_python//python/runfiles",
+    ],
+)

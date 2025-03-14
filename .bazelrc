@@ -104,7 +104,8 @@ build:clang-tidy --copt=-Wno-pragma-once-outside-header
 # Error output settings.
 common --verbose_failures
 common --subcommands
-test --test_output=errors
+test --test_output=all
+
 
 # Suppress the DEBUG: log messages from bazel. We get spammy DEBUG:
 # messages from rules_python.

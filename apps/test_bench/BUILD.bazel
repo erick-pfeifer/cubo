@@ -1,5 +1,7 @@
 load("@pigweed//pw_build:pw_cc_binary.bzl", "pw_cc_binary_with_map")
 load("//targets/atsame54n20a:binary.bzl", "atsame54n20a_binary")
+load("//tools/flash_cm4:flash.bzl", "flash_cm4")
+
 
 package(default_visibility = ["//visibility:public"])
 
@@ -23,4 +25,17 @@ pw_cc_binary_with_map(
 atsame54n20a_binary(
     name = "test_bench.elf",
     binary = ":test_bench",
+)
+
+flash_cm4(
+    name = "flash",
+    binary = "test_bench.elf",
+    # data = [
+    #     ":test_bench.elf",
+    #     "@openocd//:all",
+    # ],
+    # deps = [
+    #     "@pigweed//pw_system/py:pw_system_lib",
+    #     "@rules_python//python/runfiles",
+    # ],
 )
