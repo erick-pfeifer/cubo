@@ -3,21 +3,6 @@ load("@pigweed//pw_build:python.bzl", "pw_py_binary")
 
 package(default_visibility = ["//visibility:public"])
 
-
-
-# py_binary(
-#     name = "flash",
-#     srcs = ["flash.py"],
-#     data = [
-#         "//apps/test_bench:test_bench.elf",
-#         "@openocd//:all",
-#     ],
-#     deps = [
-#         "@pigweed//pw_system/py:pw_system_lib",
-#         "@rules_python//python/runfiles",
-#     ],
-# )
-
 pw_py_binary(
     name = "flash",
     srcs = [
