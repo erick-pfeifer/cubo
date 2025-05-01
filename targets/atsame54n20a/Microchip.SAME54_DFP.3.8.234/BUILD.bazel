@@ -6,7 +6,9 @@ cc_library(
          glob(["include/component/*.h"]) +
          glob(["include/instance/*.h"]) +
          glob(["include/pio/*.h"]),
-  srcs = [ "gcc/gcc/startup_same54n20a.c" ],
+  srcs = [ "gcc/gcc/startup_same54n20a.c",
+           "gcc/system_same54n20a.c",
+         ],
   visibility = ["//visibility:public"],
   alwayslink = 1,
 )

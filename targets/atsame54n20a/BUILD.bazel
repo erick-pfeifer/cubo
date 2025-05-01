@@ -5,6 +5,7 @@ load(
 
 load("@pigweed//pw_build:merge_flags.bzl", "flags_from_dict")
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@pigweed//third_party/freertos:flags.bzl", "FREERTOS_FLAGS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -19,6 +20,37 @@ cc_library(
     alwayslink = 1,
 )
 
+cc_library(
+    name = "freertos_config",
+    hdrs = [
+        "config_freertos/FreeRTOSConfig.h",
+    ],
+    strip_include_prefix = "config_freertos",
+    tags = ["noclangtidy"],
+    target_compatible_with = [
+        "@pigweed//pw_build/constraints/rtos:freertos",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        "@pigweed//third_party/freertos:config_assert",
+    ],
+)
+
+cc_library(
+    name = "freertos_support",
+    srcs = [
+        "config_freertos/FreeRTOSConfig.cc",
+    ],
+    target_compatible_with = [
+        "@pigweed//pw_build/constraints/rtos:freertos",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        "@freertos",
+    ],
+    alwayslink = 1,
+)
+
 platform(
     name = "atsame54n20a",
     constraint_values = [
@@ -29,12 +61,22 @@ platform(
         "@pigweed//pw_cpu_exception:enabled",
         "@pigweed//pw_interrupt_cortex_m:backend",
         "@platforms//os:none",
+        "@freertos//:port_ARM_CM4F",
+        "@freertos//:malloc_heap_4",
+        "@freertos//:disable_task_statics",
+        "@pigweed//pw_build/constraints/rtos:freertos",
+
     ],
-    flags = flags_from_dict({
-        # Backends goe here...
-        "@pigweed//pw_toolchain:cortex-m_toolchain_kind": "gcc",
-        "@pigweed//pw_assert:backend": "@pigweed//pw_assert_basic",
+    flags = flags_from_dict(FREERTOS_FLAGS | {
+        # Backends go here...
+        "@freertos//:freertos_config": ":freertos_config",
+        "@pigweed//pw_assert:assert_backend": "@pigweed//pw_assert_basic",
+        "@pigweed//pw_assert:assert_backend_impl": "@pigweed//pw_assert_basic:impl",
         "@pigweed//pw_assert:check_backend": "@pigweed//pw_assert_basic",
-        # Linker goes here?
+        "@pigweed//pw_assert:check_backend_impl": "@pigweed//pw_assert_basic:impl",
+        "@pigweed//pw_log:backend": "@pigweed//pw_log_basic",
+        "@pigweed//pw_malloc:backend": "@pigweed//pw_malloc_freelist",
+        "@pigweed//pw_sys_io:backend": "//backends/pw_sys_io_baremetal:impl",
+        "@pigweed//pw_toolchain:cortex-m_toolchain_kind": "gcc",
     }),
 )

@@ -1,0 +1,17 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "impl",
+    srcs = ["sys_io_baremetal.cc"],
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        "//targets/atsame54n20a/bsp:peripheral",
+        "@pigweed//pw_status",
+        "@pigweed//pw_sys_io:default_putget_bytes",
+        "@pigweed//pw_sys_io:pw_sys_io.facade",
+    ],
+    alwayslink = 1,
+)
