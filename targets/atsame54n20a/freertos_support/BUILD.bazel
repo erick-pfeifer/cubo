@@ -30,6 +30,7 @@ cc_library(
     deps = [
         "@freertos",
         "@pigweed//third_party/freertos:support",
+        "//targets/atsame54n20a/bsp:peripheral",
     ],
     alwayslink = 1,
 )

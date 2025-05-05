@@ -1,7 +1,9 @@
 
-// Functions needed when configGENERATE_RUN_TIME_STATS is on.
+#include "peripheral/systick/plib_systick.h"
+
+
 extern "C" void configureTimerForRunTimeStats(void) {}
+
 extern "C" unsigned long getRunTimeCounterValue(void) {
-  // TODO - Provide proper runtime counter value.
-  return 0;
+  return SYSTICK_GetTickCounter();
 }

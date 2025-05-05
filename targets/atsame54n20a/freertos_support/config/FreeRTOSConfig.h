@@ -11,7 +11,7 @@ extern unsigned long getRunTimeCounterValue(void);
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 #define configSUPPORT_STATIC_ALLOCATION 0
 
-#define configTOTAL_HEAP_SIZE 65536
+#define configTOTAL_HEAP_SIZE 65536  // 64KB
 
 #define configUSE_16_BIT_TICKS 0
 #define configUSE_CO_ROUTINES 0
