@@ -26,6 +26,7 @@ cc_args(
         "-lc",
         "-lm",
         "-Wl,--no-warn-rwx-segment",
+        "-Wl,-print-memory-usage",
     ],
 )
 

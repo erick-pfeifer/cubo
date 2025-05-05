@@ -1,0 +1,35 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "config",
+    hdrs = [
+        "config/FreeRTOSConfig.h",
+    ],
+    strip_include_prefix = "config",
+    tags = ["noclangtidy"],
+    target_compatible_with = [
+        "@pigweed//pw_build/constraints/rtos:freertos",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        "@pigweed//third_party/freertos:config_assert",
+    ],
+)
+
+cc_library(
+    name = "support",
+    srcs = [
+        "freertos_support.cc",
+    ],
+    target_compatible_with = [
+        "@pigweed//pw_build/constraints/rtos:freertos",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        "@freertos",
+        "@pigweed//third_party/freertos:support",
+    ],
+    alwayslink = 1,
+)

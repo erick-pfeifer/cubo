@@ -20,37 +20,6 @@ cc_library(
     alwayslink = 1,
 )
 
-cc_library(
-    name = "freertos_config",
-    hdrs = [
-        "config_freertos/FreeRTOSConfig.h",
-    ],
-    strip_include_prefix = "config_freertos",
-    tags = ["noclangtidy"],
-    target_compatible_with = [
-        "@pigweed//pw_build/constraints/rtos:freertos",
-        "@platforms//cpu:armv7e-m",
-    ],
-    deps = [
-        "@pigweed//third_party/freertos:config_assert",
-    ],
-)
-
-cc_library(
-    name = "freertos_support",
-    srcs = [
-        "config_freertos/FreeRTOSConfig.cc",
-    ],
-    target_compatible_with = [
-        "@pigweed//pw_build/constraints/rtos:freertos",
-        "@platforms//cpu:armv7e-m",
-    ],
-    deps = [
-        "@freertos",
-    ],
-    alwayslink = 1,
-)
-
 platform(
     name = "atsame54n20a",
     constraint_values = [
@@ -69,7 +38,7 @@ platform(
     ],
     flags = flags_from_dict(FREERTOS_FLAGS | {
         # Backends go here...
-        "@freertos//:freertos_config": ":freertos_config",
+        "@freertos//:freertos_config": "//targets/atsame54n20a/freertos_support:config",
         "@pigweed//pw_assert:assert_backend": "@pigweed//pw_assert_basic",
         "@pigweed//pw_assert:assert_backend_impl": "@pigweed//pw_assert_basic:impl",
         "@pigweed//pw_assert:check_backend": "@pigweed//pw_assert_basic",

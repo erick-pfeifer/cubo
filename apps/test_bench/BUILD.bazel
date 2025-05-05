@@ -20,9 +20,7 @@ pw_cc_binary_with_map(
             "//targets/atsame54n20a/bsp:peripheral",
             # Resolves dependencies to lib nano (_write, _read, etc) with stubs.
             "@pigweed//pw_toolchain/arm_gcc:arm_none_eabi_gcc_support",
-            "@freertos",
-            "//targets/atsame54n20a:freertos_support",
-            "@pigweed//third_party/freertos:support",
+            "//targets/atsame54n20a/freertos_support:support",
             "@pigweed//pw_assert:backend_impl",
         ],})
 )
@@ -35,12 +33,4 @@ atsame54n20a_binary(
 flash_cm4(
     name = "flash",
     binary = "test_bench.elf",
-    # data = [
-    #     ":test_bench.elf",
-    #     "@openocd//:all",
-    # ],
-    # deps = [
-    #     "@pigweed//pw_system/py:pw_system_lib",
-    #     "@rules_python//python/runfiles",
-    # ],
 )
