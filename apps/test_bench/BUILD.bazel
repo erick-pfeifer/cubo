@@ -7,8 +7,7 @@ package(default_visibility = ["//visibility:public"])
 
 pw_cc_binary_with_map(
     name = "test_bench",
-    srcs = ["app.cc"],
-    # malloc = "@bazel_tools//tools/cpp:malloc",
+    srcs = ["main.cc"],
     malloc = "@pigweed//pw_malloc",
     deps = [
         "@pigweed//pw_status",
@@ -17,11 +16,11 @@ pw_cc_binary_with_map(
             "//targets/atsame54n20a:linker_script",
             "//targets/atsame54n20a:pre_init",
             "//targets/atsame54n20a/bsp:init",
-            "//targets/atsame54n20a/bsp:peripheral",
             # Resolves dependencies to lib nano (_write, _read, etc) with stubs.
             "@pigweed//pw_toolchain/arm_gcc:arm_none_eabi_gcc_support",
             "//targets/atsame54n20a/freertos_support:support",
             "@pigweed//pw_assert:backend_impl",
+            "//apps/test_bench/hello_world",
         ],})
 )
 

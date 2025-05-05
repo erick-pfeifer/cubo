@@ -1,0 +1,17 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+
+cc_library(
+    name = "hello_world",
+    srcs = ["hello_world.cc"],
+    hdrs = ["public/hello_world/hello_world.h"],
+    includes = ["public"],
+    deps = [
+      "//targets/atsame54n20a/bsp:peripheral",
+      "@pigweed//pw_status",
+      "@pigweed//pw_thread:thread",
+      "@pigweed//pw_thread_freertos:thread",
+    ]
+)

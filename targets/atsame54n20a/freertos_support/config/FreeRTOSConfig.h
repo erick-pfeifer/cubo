@@ -9,7 +9,7 @@ extern void configureTimerForRunTimeStats(void);
 extern unsigned long getRunTimeCounterValue(void);
 
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
-#define configSUPPORT_STATIC_ALLOCATION 0
+#define configSUPPORT_STATIC_ALLOCATION 1
 
 #define configTOTAL_HEAP_SIZE 65536  // 64KB
 

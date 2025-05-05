@@ -37,7 +37,7 @@ platform(
 
     ],
     flags = flags_from_dict(FREERTOS_FLAGS | {
-        # Backends go here...
+        # Backends go here (and freertos backends are set in the flag above).
         "@freertos//:freertos_config": "//targets/atsame54n20a/freertos_support:config",
         "@pigweed//pw_assert:assert_backend": "@pigweed//pw_assert_basic",
         "@pigweed//pw_assert:assert_backend_impl": "@pigweed//pw_assert_basic:impl",
