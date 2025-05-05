@@ -12,6 +12,7 @@ cc_library(
       "//targets/atsame54n20a/bsp:peripheral",
       "@pigweed//pw_status",
       "@pigweed//pw_thread:thread",
+      "@pigweed//pw_thread:sleep",
       "@pigweed//pw_thread_freertos:thread",
     ]
 )

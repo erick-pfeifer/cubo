@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include "hello_world/hello_world.h"
 
 #include "definitions.h"
@@ -7,10 +9,15 @@
 #include "pw_thread/detached_thread.h"
 #include "pw_thread/thread.h"
 #include "pw_thread/context.h"
+#include "pw_thread/sleep.h"
 #include "pw_thread_freertos/context.h"
 #include "pw_thread_freertos/options.h"
+#include "pw_chrono/system_clock.h"
 
 namespace hello_world {
+
+using namespace std::chrono_literals;
+
 namespace {
 
 static constexpr size_t kStackSizeInWords = 1024;
@@ -28,6 +35,7 @@ const pw::thread::Options& CreateThreadOptions() {
 void HelloWorldMain() {
   while(true) {
     LED_Toggle();
+    pw::this_thread::sleep_for(pw::chrono::SystemClock::duration{1s});
   }
 }
 
