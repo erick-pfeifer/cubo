@@ -2,6 +2,16 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
 
+cc_library(
+    name = "hello_world_thread_init",
+    srcs = ["hello_world_thread_init.cc"],
+    hdrs = ["public/hello_world/hello_world_thread_init.h"],
+    includes = ["public"],
+    deps = [
+      "@pigweed//pw_thread_freertos:thread",
+      ":hello_world",
+    ]
+)
 
 cc_library(
     name = "hello_world",
@@ -9,11 +19,8 @@ cc_library(
     hdrs = ["public/hello_world/hello_world.h"],
     includes = ["public"],
     deps = [
-      "//targets/atsame54n20a/bsp:peripheral",
-      "@pigweed//pw_status",
-      "@pigweed//pw_thread:thread",
+      "//targets/atsame54n20a/bsp/cc_wrappers/gpio",
       "@pigweed//pw_thread:thread_core",
       "@pigweed//pw_thread:sleep",
-      "@pigweed//pw_thread_freertos:thread",
     ]
 )

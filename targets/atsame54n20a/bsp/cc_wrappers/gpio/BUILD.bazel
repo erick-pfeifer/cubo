@@ -1,0 +1,12 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "gpio",
+    srcs = ["gpio.cc"],
+    hdrs = ["public/gpio/gpio_wrapper.h"],
+    includes = ["public/"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//targets/atsame54n20a/bsp:peripheral",
+    ],
+)

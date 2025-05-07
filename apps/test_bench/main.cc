@@ -1,7 +1,7 @@
 #include "definitions.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "hello_world/hello_world.h"
+#include "hello_world/hello_world_thread_init.h"
 
 
 int main() {
