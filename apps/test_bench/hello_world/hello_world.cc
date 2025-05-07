@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstddef>
 
 #include "hello_world/hello_world.h"
 
@@ -32,15 +33,17 @@ const pw::thread::Options& CreateThreadOptions() {
 }
 }  // namespace
 
-void HelloWorldMain() {
+void HelloWorldThread::Run() {
   while(true) {
     LED_Toggle();
     pw::this_thread::sleep_for(pw::chrono::SystemClock::duration{1s});
   }
-}
+  }
 
 
 void Init() {
- pw::thread::DetachedThread(CreateThreadOptions(), HelloWorldMain);
+  static HelloWorldThread thread_instance;
+  pw::thread::DetachedThread(CreateThreadOptions(),
+                             thread_instance);
 }
 }  // namespace hello_world

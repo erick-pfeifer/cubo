@@ -1,6 +1,7 @@
 {
   "recommendations": [
-    "pigweed.pigweed"
+    "pigweed.pigweed",
+    "marus25.cortex-debug"
   ],
   "unwantedRecommendations": [
     "ms-vscode.cpptools",

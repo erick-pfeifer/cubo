@@ -43,7 +43,7 @@ extern unsigned long getRunTimeCounterValue(void);
 #define configTIMER_TASK_STACK_DEPTH 512
 
 /* __NVIC_PRIO_BITS in CMSIS */
-#define configPRIO_BITS 4
+#define configPRIO_BITS 3
 
 #define configLIBRARY_LOWEST_INTERRUPT_PRIORITY 15
 #define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
@@ -64,8 +64,9 @@ extern unsigned long getRunTimeCounterValue(void);
 
 // Instead of defining configASSERT(), include a header that provides a
 // definition that redirects to pw_assert.
-#include "pw_third_party/freertos/config_assert.h"
+// #include "pw_third_party/freertos/config_assert.h"
+#define configASSERT(x) if( ( x ) == 0 ) while(1)
 
 #define vPortSVCHandler SVCall_Handler
-#define vPortPendSVHandler PendSV_Handler
-#define vPortSysTickHandler SysTick_Handler
+#define xPortPendSVHandler PendSV_Handler
+#define xPortSysTickHandler SysTick_Handler

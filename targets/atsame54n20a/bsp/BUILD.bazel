@@ -24,7 +24,6 @@ cc_library(
         "peripheral/nvmctrl/plib_nvmctrl.c",
         "peripheral/port/plib_port.c",
         "peripheral/sercom/usart/plib_sercom2_usart.c",
-        "peripheral/systick/plib_systick.c",
         "peripheral/tcc/plib_tcc0.c",
     ],
     hdrs = [
@@ -36,7 +35,6 @@ cc_library(
         "peripheral/port/plib_port.h",
         "peripheral/sercom/usart/plib_sercom2_usart.h",
         "peripheral/sercom/usart/plib_sercom_usart_common.h",
-        "peripheral/systick/plib_systick.h",
         "peripheral/tcc/plib_tcc0.h",
         "peripheral/tcc/plib_tcc_common.h",
     ],

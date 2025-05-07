@@ -32,7 +32,7 @@ platform(
         "@platforms//os:none",
         "@freertos//:port_ARM_CM4F",
         "@freertos//:malloc_heap_4",
-        "@freertos//:disable_task_statics",
+        # "@freertos//:disable_task_statics",
         "@pigweed//pw_build/constraints/rtos:freertos",
 
     ],

@@ -1,0 +1,24 @@
+
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "cortex-debug",
+          "request": "launch",
+          "name": "Debug (OpenOCD)",
+          "servertype": "openocd",
+          "cwd": "${workspaceRoot}",
+          "preLaunchTask": "Build test_bench",
+          "runToEntryPoint": "main",
+          "executable": "${workspaceRoot}/bazel-bin/apps/test_bench/test_bench.elf",
+          "device": "SAME54P20A",
+          "configFiles": [
+              "${workspaceRoot}/external/+_repo_rules3+openocd/scripts/board/microchip_same54_xplained_pro.cfg"
+          ],
+          "svdFile": "${workspaceRoot}/targets/atsame54n20a/Microchip.SAME54_DFP.3.8.234/svd/ATSAME54N20A.svd",
+          "armToolchainPath": "${workspaceRoot}/external/+_repo_rules3+gcc_arm_none_eabi_toolchain/bin",
+          "showDevDebugOutput": "raw",
+          "serverpath": "${workspaceRoot}/external/+_repo_rules3+openocd/bin/openocd"
+      }
+  ]
+}
