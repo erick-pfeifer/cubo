@@ -1,0 +1,13 @@
+load("@pigweed//pw_build:python.bzl", "pw_py_binary")
+
+pw_py_binary(
+    name = "presubmit",
+    srcs = ["presubmit.py"],
+    main = "presubmit.py",
+    args = ["--install"],
+    deps = [
+        "@rules_python//python/runfiles",
+        "@pigweed//pw_presubmit/py:pw_presubmit",
+        "@pigweed//pw_cli/py:pw_cli",
+    ],
+)
