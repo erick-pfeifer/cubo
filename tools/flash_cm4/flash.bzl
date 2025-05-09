@@ -1,4 +1,3 @@
-
 """Bazel macros for flashing a cortex-m4 device binary."""
 
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
@@ -14,7 +13,7 @@ def _flash_cm4(
         name = name,
         src = str(Label("//tools/flash_cm4:flash")),
         args = args,
-        data = data + [ "@openocd//:all"],
+        data = data + ["@openocd//:all"],
         # Note: out is mandatory in older bazel-skylib versions.
         out = name + ".exe",
         **kwargs
@@ -32,4 +31,3 @@ def flash_cm4(
       **kwargs: Forwarded to the underlying native_binary rule.
     """
     _flash_cm4(name, binary, **kwargs)
-

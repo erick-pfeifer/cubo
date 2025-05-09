@@ -1,5 +1,5 @@
-load("@rules_cc//cc/toolchains:toolchain.bzl", "cc_toolchain")
 load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
+load("@rules_cc//cc/toolchains:toolchain.bzl", "cc_toolchain")
 
 cc_args(
     name = "warnings",
@@ -115,12 +115,10 @@ cc_toolchain(
         "@pigweed//pw_toolchain/cc/capability:linker_is_gcc",
     ],
     target_compatible_with = [
-        "@pigweed//pw_build/constraints/arm:cortex-m4"
+        "@pigweed//pw_build/constraints/arm:cortex-m4",
     ],
-
     tool_map = "@gcc_arm_none_eabi_toolchain//:all_tools",
 )
-
 
 toolchain(
     name = "gcc_device",
@@ -131,7 +129,6 @@ toolchain(
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
 
-
 toolchain(
     name = "cc_toolchain_cortex-m4",
     target_compatible_with = [
@@ -140,5 +137,3 @@ toolchain(
     toolchain = "@pigweed//pw_toolchain:cortex-m_cc_toolchain",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
-
-

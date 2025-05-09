@@ -16,7 +16,9 @@ bazel_dep(name = "rules_cc", version = "0.0.17")
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "local_repository")
+
 cipd_repository = use_repo_rule("@pigweed//pw_env_setup/bazel/cipd_setup:cipd_rules.bzl", "cipd_repository")
 
 # Module overrides
@@ -31,10 +33,7 @@ archive_override(
 
 git_override(
     module_name = "pigweed",
-    # ROLL: Warning: this entry is automatically updated.
-    # ROLL: Last updated 2025-02-17.
-    # ROLL: By https://cr-buildbucket.appspot.com/build/8722679720247443489.
-    commit = "a551daada32288b2541783d99d81b23a621bf0b7",
+    commit = "0964137f43f23bf1d80e8f0d36278ff1128a884a",
     remote = "https://pigweed.googlesource.com/pigweed/pigweed",
 )
 

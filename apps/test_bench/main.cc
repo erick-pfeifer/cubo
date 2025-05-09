@@ -1,8 +1,7 @@
-#include "definitions.h"
 #include "FreeRTOS.h"
-#include "task.h"
+#include "definitions.h"
 #include "hello_world/hello_world_thread_init.h"
-
+#include "task.h"
 
 int main() {
   SYS_Initialize(nullptr);

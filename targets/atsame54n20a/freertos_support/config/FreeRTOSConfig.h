@@ -65,7 +65,9 @@ extern unsigned long getRunTimeCounterValue(void);
 // Instead of defining configASSERT(), include a header that provides a
 // definition that redirects to pw_assert.
 // #include "pw_third_party/freertos/config_assert.h"
-#define configASSERT(x) if( ( x ) == 0 ) while(1)
+#define configASSERT(x) \
+  if ((x) == 0)         \
+    while (1)
 
 #define vPortSVCHandler SVCall_Handler
 #define xPortPendSVHandler PendSV_Handler

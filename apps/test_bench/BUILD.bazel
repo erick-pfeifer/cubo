@@ -2,7 +2,6 @@ load("@pigweed//pw_build:pw_cc_binary.bzl", "pw_cc_binary_with_map")
 load("//targets/atsame54n20a:binary.bzl", "atsame54n20a_binary")
 load("//tools/flash_cm4:flash.bzl", "flash_cm4")
 
-
 package(default_visibility = ["//visibility:public"])
 
 pw_cc_binary_with_map(
@@ -22,7 +21,8 @@ pw_cc_binary_with_map(
             "//targets/atsame54n20a/freertos_support:support",
             "@pigweed//pw_assert:backend_impl",
             "//apps/test_bench/hello_world:hello_world_thread_init",
-        ],})
+        ],
+    }),
 )
 
 atsame54n20a_binary(

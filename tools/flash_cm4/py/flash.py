@@ -11,7 +11,7 @@ _OPENOCD_PATH = "openocd/bin/openocd"
 _OPENOCD_CONFIG_PATH = "openocd/scripts/board/microchip_same54_xplained_pro.cfg"
 
 # Vendor ID and model ID.
-_VENDOR_ID = 0x03eb
+_VENDOR_ID = 0x03EB
 _PRODUCT_ID = 0x2111
 
 
@@ -46,7 +46,9 @@ def flash(board_serial, binary: Path):
             # "adapter speed 4000",
             # "-c",
             # "bindto 0.0.0.0",
-        ], )
+        ],
+    )
+
 
 def find_elf(binary: Path) -> Path | None:
     """Attempt to find and return the path to an ELF file for a binary.
@@ -56,26 +58,27 @@ def find_elf(binary: Path) -> Path | None:
 
     Returns the path to the associated ELF file, or None if none was found.
     """
-    if binary.suffix == '.elf' or not binary.suffix:
+    if binary.suffix == ".elf" or not binary.suffix:
         return binary
     choices = (
-        binary.parent / f'{binary.stem}.elf',
-        binary.parent / 'bin' / f'{binary.stem}.elf',
-        binary.parent / 'test' / f'{binary.stem}.elf',
+        binary.parent / f"{binary.stem}.elf",
+        binary.parent / "bin" / f"{binary.stem}.elf",
+        binary.parent / "test" / f"{binary.stem}.elf",
     )
     for choice in choices:
         if choice.is_file():
             return choice
 
-    print(f'Cannot find ELF file to use as a token database for binary: {binary}')
+    print(f"Cannot find ELF file to use as a token database for binary: {binary}")
     return None
 
 
 def extract_args() -> argparse.ArgumentParser:
     """Returns a parser for flashing command-line arguments."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('binary', type=Path, help='The target binary to flash')
+    parser.add_argument("binary", type=Path, help="The target binary to flash")
     return parser
+
 
 if __name__ == "__main__":
     args = extract_args().parse_args()
