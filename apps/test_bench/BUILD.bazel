@@ -8,7 +8,7 @@ pw_cc_binary_with_map(
     name = "test_bench",
     srcs = ["main.cc"],
     malloc = "@pigweed//pw_malloc",
-    deps = [ ] + select({
+    deps = [] + select({
         "@platforms//cpu:armv7e-m": [
             "//targets/atsame54n20a:linker_script",
             "//targets/atsame54n20a:pre_init",
