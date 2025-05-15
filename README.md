@@ -1,4 +1,13 @@
 
+## Configure Presubmit (under construction, tidy coming soon)
+
+1. (For Linux only) Add bazelisk executable to PATH, or move it to
+ `/usr/local/bin/`.
+1. Run `bazelisk run //tools/presubmit/py:presubmit` to install the `git-hook`
+ for pushing with `git push`.
+1. (optional) During local development, periodically run
+ `bazelisk run @pigweed//pw_presubmit/py:format` to format code (Note: this
+  command only covers files tracked by the git project).
 
 
 
