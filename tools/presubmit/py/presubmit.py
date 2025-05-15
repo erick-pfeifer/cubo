@@ -9,7 +9,11 @@ __LOG = logging.getLogger(__name__)
 
 PRE_PUSH_HOOK_COMMANDS = ['bazelisk',
                           'run',
-                          '@pigweed//pw_resubmit/py:format', '--', '--base', 'HEAD~1', '--apply_fixes', 'False']
+                          '@pigweed//pw_presubmit/py:format',
+                          '--',
+                          '--base',
+                          'HEAD~1',
+                          '--check']
 
 
 def run(install: bool) -> int:
