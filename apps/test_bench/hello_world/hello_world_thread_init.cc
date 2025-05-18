@@ -1,6 +1,7 @@
 #include <cstddef>
 
 #include "FreeRTOS.h"
+#include "digital_io_atsame54n20a/digital_io_instances.h"
 #include "hello_world/hello_world.h"
 #include "pw_thread/context.h"
 #include "pw_thread/detached_thread.h"
@@ -11,7 +12,8 @@
 namespace hello_world {
 
 void Init() {
-  static HelloWorldThread thread_instance;
+  static HelloWorldThread thread_instance(
+      digital_io_atsame54n20a::GetLedInstance());
 
   static constexpr size_t kStackSizeInWords = 1024;
   static pw::thread::freertos::StaticContextWithStack<kStackSizeInWords>

@@ -1,0 +1,45 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "digital_io_type",
+    hdrs = ["public/digital_io_atsame54n20a/digital_io_type.h"],
+    includes = ["public"],
+    deps = ["//targets/atsame54n20a/bsp/cc_wrappers/gpio_wrapper:gpio_type"],
+)
+
+cc_library(
+    name = "digital_io",
+    srcs = ["digital_io.cc"],
+    hdrs = ["public/digital_io_atsame54n20a/digital_io.h"],
+    includes = ["public"],
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        ":digital_io_type",
+        "//targets/atsame54n20a/bsp/cc_wrappers/gpio_wrapper:gpio",
+        "@pigweed//pw_digital_io",
+        "@pigweed//pw_status",
+    ],
+)
+
+cc_library(
+    name = "digital_io_instances",
+    srcs = ["digital_io_instances.cc"],
+    hdrs = ["public/digital_io_atsame54n20a/digital_io_instances.h"],
+    includes = ["public"],
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:armv7e-m",
+    ],
+    deps = [
+        ":digital_io",
+        ":digital_io_type",
+        "//targets/atsame54n20a/bsp/cc_wrappers/gpio_wrapper:gpio",
+        "@pigweed//pw_digital_io",
+        "@pigweed//pw_status",
+    ],
+)

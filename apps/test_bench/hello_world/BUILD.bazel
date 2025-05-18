@@ -1,3 +1,4 @@
+load("@pigweed//pw_build:pigweed.bzl", "pw_cc_test")
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -9,6 +10,7 @@ cc_library(
     includes = ["public"],
     deps = [
         ":hello_world",
+        "//backends/digital_io_atsame54n20a:digital_io_instances",
         "@pigweed//pw_thread_freertos:thread",
     ],
 )
@@ -19,8 +21,20 @@ cc_library(
     hdrs = ["public/hello_world/hello_world.h"],
     includes = ["public"],
     deps = [
-        "//targets/atsame54n20a/bsp/cc_wrappers/gpio",
+        "@pigweed//pw_digital_io",
+        "@pigweed//pw_status",
         "@pigweed//pw_thread:sleep",
         "@pigweed//pw_thread:thread_core",
+    ],
+)
+
+pw_cc_test(
+    name = "hello_world_test",
+    srcs = ["hello_world_test.cc"],
+    deps = [
+        ":hello_world",
+        "@pigweed//pw_digital_io",
+        "@pigweed//pw_digital_io:digital_io_mock",
+        "@pigweed//pw_unit_test",
     ],
 )
